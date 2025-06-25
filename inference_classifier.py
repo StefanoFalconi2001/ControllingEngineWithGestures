@@ -18,7 +18,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
 # Label dictionary for predictions
-labels_dict = {0: 'Marcha', 1: 'Paro', 2:'Giro Horario', 3:'Giro Antihorario', 4:'Incrementar Velocidad', 5: 'Decrementar Velocidad'}
+labels_dict = {0: 'Start', 1: 'Stop', 2:'Counter clockwise spin', 3:'Clockwise spin', 4:'Increase speed', 5: 'Decrease speed'}
 
 while True:
     data_aux = []
