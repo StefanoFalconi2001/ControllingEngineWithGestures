@@ -22,4 +22,5 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[
 disp.plot(cmap='Blues', xticks_rotation=45)
 plt.title("Matriz de Confusión - Clasificador de Gestos")
 plt.tight_layout()
-plt.show()
+plt.savefig('matriz_confusion.png', dpi=300)
+print("Matriz de confusión guardada como 'matriz_confusion.png'")
