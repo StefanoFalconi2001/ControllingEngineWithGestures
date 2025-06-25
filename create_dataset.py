@@ -3,12 +3,8 @@ import pickle
 
 import mediapipe as mp
 import cv2
-import matplotlib.pyplot as plt
-
 
 mp_hands = mp.solutions.hands
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
@@ -16,10 +12,10 @@ DATA_DIR = './data'
 
 data = []
 labels = []
+
 for dir_ in os.listdir(DATA_DIR):
     for img_path in os.listdir(os.path.join(DATA_DIR, dir_)):
         data_aux = []
-
         x_ = []
         y_ = []
 
@@ -32,7 +28,6 @@ for dir_ in os.listdir(DATA_DIR):
                 for i in range(len(hand_landmarks.landmark)):
                     x = hand_landmarks.landmark[i].x
                     y = hand_landmarks.landmark[i].y
-
                     x_.append(x)
                     y_.append(y)
 
@@ -42,9 +37,11 @@ for dir_ in os.listdir(DATA_DIR):
                     data_aux.append(x - min(x_))
                     data_aux.append(y - min(y_))
 
-            data.append(data_aux)
-            labels.append(dir_)
+            # Asegura que solo se agreguen muestras completas
+            if len(data_aux) == 42:  # o 84 si estás guardando más info
+                data.append(data_aux)
+                labels.append(dir_)
 
-f = open('data.pickle', 'wb')
-pickle.dump({'data': data, 'labels': labels}, f)
-f.close()
+# Guardar dataset
+with open('data.pickle', 'wb') as f:
+    pickle.dump({'data': data, 'labels': labels}, f)
